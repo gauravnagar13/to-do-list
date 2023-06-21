@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List App</title>
+  <style>
+    body { background-color: #068cc1;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+    }
+    #todo-list {
+      margin: 20px auto;
+      max-width: 400px;
+    }
+    #todo-list input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #todo-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #todo-list li {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    #todo-list li:last-child {
+      border-bottom: none;
+    }
+    #todo-list li input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    #todo-list li button {
+      margin-left: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <div id="todo-list">
+    <input type="text" id="taskInput" placeholder="Add a new task">
+    <ul id="tasksList"></ul>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const taskInput = document.getElementById('taskInput');
+      const tasksList = document.getElementById('tasksList');
+
+      function addTask() {
+        const taskText = taskInput.value.trim();
+        if (taskText !== '') {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <input type="checkbox">
+            <span>${taskText}</span>
+            <button>Delete</button>
+          `;
+          tasksList.appendChild(li);
+          taskInput.value = '';
+        }
+      }
+
+      function deleteTask() {
+        const listItem = this.parentElement;
+        tasksList.removeChild(listItem);
+      }
+
+      function initialize() {
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add Task';
+        addButton.addEventListener('click', addTask);
+        taskInput.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+            addTask();
+          }
+        });
+        tasksList.addEventListener('click', function(event) {
+          if (event.target.tagName === 'BUTTON') {
+            deleteTask.call(event.target);
+          }
+        });
+        document.body.appendChild(addButton);
+      }
+
+      initialize();
+    });
+  </script>
+</body>
+</html>
